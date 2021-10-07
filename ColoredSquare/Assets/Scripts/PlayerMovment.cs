@@ -7,9 +7,11 @@ public class PlayerMovment : MonoBehaviour
     Rigidbody2D rb;
     public float movementSpeed = 5f, jumpForce = 3f;
     public bool isGround;
+    GameObject feet;
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
+        feet = GameObject.Find("Feet");
     }
 
     
@@ -23,17 +25,8 @@ public class PlayerMovment : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
             rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Floor")
-            isGround = true;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Floor")
-            isGround = false;
+        feet.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.57f, this.transform.position.z);
+        feet.transform.rotation = Quaternion.identity;
     }
 }
