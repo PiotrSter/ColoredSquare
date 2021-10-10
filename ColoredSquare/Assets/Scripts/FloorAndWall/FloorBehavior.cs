@@ -10,13 +10,8 @@ public class FloorBehavior : MonoBehaviour
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovment>();
-        boxCollider2D = this.gameObject.GetComponent<BoxCollider2D>();
+        boxCollider2D = this.GetComponent<BoxCollider2D>();
         boxCollider2D.isTrigger = true;
-    }
-
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
