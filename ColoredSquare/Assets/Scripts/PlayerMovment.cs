@@ -9,12 +9,14 @@ public class PlayerMovment : MonoBehaviour
     public bool isGround, canMove;
     GameObject feet;
     public Vector3 playerPosition;
+    GameManager gm;
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         feet = GameObject.Find("Feet");
         canMove = true;
         playerPosition = this.gameObject.transform.position;
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     
@@ -22,7 +24,10 @@ public class PlayerMovment : MonoBehaviour
     {
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            gm.isGameStart = true;
+        }
 
         if (Input.GetKey(KeyCode.A) && canMove)
             rb.velocity = new Vector2(-movementSpeed, rb.velocity.y);

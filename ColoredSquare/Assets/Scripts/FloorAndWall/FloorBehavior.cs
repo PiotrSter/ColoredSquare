@@ -21,6 +21,9 @@ public class FloorBehavior : MonoBehaviour
             boxCollider2D.isTrigger = false;
             player.isGround = true;
         }
+
+        if (collision.name == "GameOverTrigger")
+            Destroy(this.gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
