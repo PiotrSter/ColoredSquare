@@ -32,7 +32,7 @@ public class WallBehavior : MonoBehaviour
             {
                 player.canMove = true;
                 isTimerOn = false;
-                time = 60;
+                time = 120;
             }
             else if (time > 0)
                 time--;       

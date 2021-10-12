@@ -24,6 +24,12 @@ public class FloorBehavior : MonoBehaviour
 
         if (collision.name == "GameOverTrigger")
             Destroy(this.gameObject);
+
+        if (collision.name == "Floor(Clone)")
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 10f, this.transform.position.z); // to nie dzia³a, bo trigger wy³apuje inny trigger a nie collidera
+
+        /*if (collision.name == "LeftWall")
+            this.transform.position = new Vector3(this.transform.position.x + ) gdybym chcia³ jednak przesuwaæ platformy któe spawnuja siê w œcianie i wystaja po za kamere*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)
