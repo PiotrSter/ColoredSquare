@@ -250,7 +250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355664188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -3.7, z: 0}
+  m_LocalPosition: {x: 0.09, y: -3.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1200477104}
@@ -418,7 +418,8 @@ MonoBehaviour:
   floor: {fileID: 4448757274328439023, guid: 904f772d44cb4b841beaa8c3bef200ea, type: 3}
   player: {fileID: 0}
   howManyFloor: 0
-  i: 0
+  pastX: 0
+  pastY: 0
 --- !u!1 &990805270
 GameObject:
   m_ObjectHideFlags: 0
