@@ -6,12 +6,18 @@ public class FloorBehavior : MonoBehaviour
 {
     public BoxCollider2D boxCollider2D;
     public PlayerMovment player;
-    
+    public FloorSpawner floorSpawner;
+    public GameManager gm;
+    private bool isColid;
+
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovment>();
+        floorSpawner = GameObject.Find("GameManager").GetComponent<FloorSpawner>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         boxCollider2D = this.GetComponent<BoxCollider2D>();
         boxCollider2D.isTrigger = true;
+        isColid = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,11 +31,17 @@ public class FloorBehavior : MonoBehaviour
         if (collision.name == "GameOverTrigger")
             Destroy(this.gameObject);
 
-        if (collision.name == "Floor(Clone)")
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 10f, this.transform.position.z); // to nie dzia³a, bo trigger wy³apuje inny trigger a nie collidera
+        if (collision.tag == "Floor")
+        {
+            if (isColid)
+            {
+                Debug.Log($"{this.name}: {this.transform.position} {collision.name}: {collision.transform.position}");
+                collision.transform.position = new Vector3(collision.transform.position.x, this.transform.position.y + 3f, collision.transform.position.z);
+                //this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
 
-        /*if (collision.name == "LeftWall")
-            this.transform.position = new Vector3(this.transform.position.x + ) gdybym chcia³ jednak przesuwaæ platformy któe spawnuja siê w œcianie i wystaja po za kamere*/
+                isColid = false;
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

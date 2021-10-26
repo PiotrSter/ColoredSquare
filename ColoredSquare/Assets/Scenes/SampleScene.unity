@@ -416,8 +416,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floor: {fileID: 4448757274328439023, guid: 904f772d44cb4b841beaa8c3bef200ea, type: 3}
+  floorCreated: {fileID: 0}
+  pastFloor: {fileID: 0}
   player: {fileID: 0}
   howManyFloor: 0
+  floorNumber: 1
   pastX: 0
   pastY: 0
 --- !u!1 &990805270
@@ -807,6 +810,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxCollider2D: {fileID: 0}
   player: {fileID: 0}
+  floorSpawner: {fileID: 0}
+  isColid: 0
 --- !u!1 &1200477103
 GameObject:
   m_ObjectHideFlags: 0
