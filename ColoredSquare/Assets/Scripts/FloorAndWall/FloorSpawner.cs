@@ -7,33 +7,45 @@ public class FloorSpawner : MonoBehaviour
     public GameObject floor, floorCreated, pastFloor;
     public Transform player;
     public GameManager gm;
-    public int howManyFloor = 0, floorNumber = 1;
+    public int floorNumber;
+    public float spawningPlatfoprmHeight;
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        floorNumber = 1;
+        spawningPlatfoprmHeight = -2f;
         SpawnFloor();
         SpawnFloor();
         SpawnFloor();
-
-        /*
-         Tu trzeba bedize chyba dodawaæ platformy do listy i sprawdzaæ, czy wspólrzedne tych platform nie nachodz¹ na siebie jeœli tak to jes przesuwaæ
-         */
     }
 
     void Update()
     {
-        
+        if (gm.howManyFloorsCurentlly < 20)
+            SpawnFloor();
     }
 
     void SpawnFloor()
     {
-        float randomX = Random.Range(-8f, 8f), randomY = Random.Range(player.transform.position.y + 1, player.transform.position.y + 5), sizeX = Random.Range(1f, 8.5f), floorHeight = floor.transform.localScale.y,
-            floorWidth = floor.transform.localScale.x; 
+        float randomX, randomY, sizeX;
+        if (floorNumber % 50 != 0)
+        {
+            randomX = Random.Range(-8f, 8f);
+            sizeX = Random.Range(3f, 8.5f);
+        }
+        else
+        {
+            randomX = 0;
+            sizeX = 19;
+        }
+
+        randomY = Random.Range(2f, 4f);        
         floor.transform.localScale = new Vector3(sizeX, floor.transform.localScale.y, floor.transform.localScale.z);
-        floorCreated = Instantiate(floor, new Vector3(randomX, randomY, 0), Quaternion.identity);
+        floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatfoprmHeight, 0), Quaternion.identity);
         floorCreated.name = $"Floor{floorNumber}";
         floorNumber++;
-        gm.listOfFloor.Add(floorCreated);
+        gm.howManyFloorsCurentlly++;
+        spawningPlatfoprmHeight += randomY;
     }
 }

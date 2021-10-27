@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovment : MonoBehaviour
 {
     Rigidbody2D rb;
-    public float movementSpeed = 5f, jumpForce = 3f;
+    public float movementSpeed, jumpForce;
     public bool isGround, canMove;
     GameObject feet;
     public Vector3 playerPosition;
@@ -17,11 +17,15 @@ public class PlayerMovment : MonoBehaviour
         canMove = true;
         playerPosition = this.gameObject.transform.position;
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        movementSpeed = 7f;
+        jumpForce = 10f;
     }
 
     
     void Update()
     {
+        if (isGround)
+            movementSpeed = 7f;
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {

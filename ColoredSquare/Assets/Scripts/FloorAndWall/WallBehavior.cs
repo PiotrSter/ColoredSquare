@@ -8,8 +8,8 @@ public class WallBehavior : MonoBehaviour
     public PlayerMovment player;
     public bool isCollison, isTimerOn;
     public string gameObjectName;
-    public float reflectionPowerHorizontal = 10f, reflectionPowerVertical = 2f;
-    public int time = 60;
+    public float reflectionPowerHorizontal, reflectionPowerVertical;
+    public int time;
     public Transform wallTransform;
     void Awake()
     {
@@ -17,6 +17,9 @@ public class WallBehavior : MonoBehaviour
         gameObjectName = this.gameObject.name;
         player = GameObject.Find("Player").GetComponent<PlayerMovment>();
         wallTransform = this.gameObject.transform;
+        reflectionPowerHorizontal = 8f;
+        reflectionPowerVertical = 8f;
+        time = 180;
     }
 
     void Update()
@@ -32,7 +35,7 @@ public class WallBehavior : MonoBehaviour
             {
                 player.canMove = true;
                 isTimerOn = false;
-                time = 120;
+                time = 180;
             }
             else if (time > 0)
                 time--;       
@@ -47,6 +50,7 @@ public class WallBehavior : MonoBehaviour
         {
             isCollison = true;
             player.canMove = false;
+            player.movementSpeed = 4.5f;
             isTimerOn = true;
         }
     }
