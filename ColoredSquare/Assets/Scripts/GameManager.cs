@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public bool isGameStart, isGameOver;
-    public List<GameObject> listOfFloor;
-    public int howManyFloorsCurentlly;
+    public int howManyFloorsCurentlly, floorNumber;
+    public Material[] materialsTab = new Material[3];
 
     private void Awake()
     {

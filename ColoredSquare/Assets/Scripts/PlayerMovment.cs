@@ -10,6 +10,7 @@ public class PlayerMovment : MonoBehaviour
     GameObject feet;
     public Vector3 playerPosition;
     GameManager gm;
+    Renderer renderer;
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -19,6 +20,8 @@ public class PlayerMovment : MonoBehaviour
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         movementSpeed = 7f;
         jumpForce = 10f;
+        renderer = this.gameObject.GetComponent<Renderer>();
+        DrawMaterial();
     }
 
     
@@ -41,5 +44,14 @@ public class PlayerMovment : MonoBehaviour
 
         feet.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.57f, this.transform.position.z);
         feet.transform.rotation = Quaternion.identity;
+
+        if (gm.floorNumber % 50 == 0)
+            DrawMaterial();
+    }
+
+    void DrawMaterial()
+    {
+        int randomMaterial = Random.Range(0, 3);
+        renderer.material = gm.materialsTab[randomMaterial];
     }
 }

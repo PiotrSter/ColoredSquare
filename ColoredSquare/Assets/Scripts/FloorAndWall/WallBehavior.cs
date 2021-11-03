@@ -11,6 +11,7 @@ public class WallBehavior : MonoBehaviour
     public float reflectionPowerHorizontal, reflectionPowerVertical;
     public int time;
     public Transform wallTransform;
+    public GameManager gm;
     void Awake()
     {
         rb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
@@ -20,6 +21,7 @@ public class WallBehavior : MonoBehaviour
         reflectionPowerHorizontal = 8f;
         reflectionPowerVertical = 8f;
         time = 180;
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -41,7 +43,8 @@ public class WallBehavior : MonoBehaviour
                 time--;       
         }
 
-        wallTransform.localScale = new Vector3(wallTransform.localScale.x, wallTransform.localScale.y + 1, wallTransform.localScale.z);
+        if (gm.floorNumber % 31 == 0)
+            wallTransform.localScale = new Vector3(wallTransform.localScale.x, wallTransform.localScale.y + 50, wallTransform.localScale.z);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

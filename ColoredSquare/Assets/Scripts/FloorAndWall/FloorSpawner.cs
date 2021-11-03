@@ -7,13 +7,14 @@ public class FloorSpawner : MonoBehaviour
     public GameObject floor, floorCreated, pastFloor;
     public Transform player;
     public GameManager gm;
-    public int floorNumber;
     public float spawningPlatfoprmHeight;
+    Renderer floorRenderer; 
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        floorNumber = 1;
+        gm.floorNumber = 1;
+        floorRenderer = floor.GetComponent<Renderer>();
         spawningPlatfoprmHeight = -2f;
         SpawnFloor();
         SpawnFloor();
@@ -29,7 +30,9 @@ public class FloorSpawner : MonoBehaviour
     void SpawnFloor()
     {
         float randomX, randomY, sizeX;
-        if (floorNumber % 50 != 0)
+        int randomMaterial = Random.Range(0, 3);
+
+        if (gm.floorNumber % 50 != 0)
         {
             randomX = Random.Range(-8f, 8f);
             sizeX = Random.Range(3f, 8.5f);
@@ -43,8 +46,9 @@ public class FloorSpawner : MonoBehaviour
         randomY = Random.Range(2f, 4f);        
         floor.transform.localScale = new Vector3(sizeX, floor.transform.localScale.y, floor.transform.localScale.z);
         floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatfoprmHeight, 0), Quaternion.identity);
-        floorCreated.name = $"Floor{floorNumber}";
-        floorNumber++;
+        floorCreated.name = $"Floor{gm.floorNumber}";
+        floorRenderer.material = gm.materialsTab[randomMaterial];
+        gm.floorNumber++;
         gm.howManyFloorsCurentlly++;
         spawningPlatfoprmHeight += randomY;
     }
