@@ -7,6 +7,7 @@ public class FloorBehavior : MonoBehaviour
     public BoxCollider2D boxCollider2D;
     public PlayerMovment player;
     public GameManager gm;
+    public int number;
 
     void Awake()
     {
@@ -22,6 +23,15 @@ public class FloorBehavior : MonoBehaviour
         {
             Destroy(this.gameObject);
             gm.howManyFloorsCurentlly--;
+        }
+
+        if (collision.name == "Player")
+        {
+            if (number % 50 == 0)
+            {
+                player.changeColor = true;
+                gm.changeSpeed = true;
+            }
         }
     }
 }

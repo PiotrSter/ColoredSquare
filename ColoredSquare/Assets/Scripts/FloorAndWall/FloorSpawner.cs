@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class FloorSpawner : MonoBehaviour
 {
-    public GameObject floor, floorCreated, pastFloor;
+    public GameObject floor, floorCreated;
     public Transform player;
     public GameManager gm;
     public float spawningPlatfoprmHeight;
-    Renderer floorRenderer; 
+    Renderer floorRenderer;
+    FloorBehavior floorBehavior;
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gm.floorNumber = 1;
         floorRenderer = floor.GetComponent<Renderer>();
+        floorRenderer.material = gm.materialsTab[0];
+        floorBehavior = floor.GetComponent<FloorBehavior>();
         spawningPlatfoprmHeight = -2f;
         SpawnFloor();
         SpawnFloor();
@@ -30,7 +32,6 @@ public class FloorSpawner : MonoBehaviour
     void SpawnFloor()
     {
         float randomX, randomY, sizeX;
-        int randomMaterial = Random.Range(0, 3);
 
         if (gm.floorNumber % 50 != 0)
         {
@@ -45,9 +46,14 @@ public class FloorSpawner : MonoBehaviour
 
         randomY = Random.Range(2f, 4f);        
         floor.transform.localScale = new Vector3(sizeX, floor.transform.localScale.y, floor.transform.localScale.z);
+        floorBehavior.number = gm.floorNumber;
         floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatfoprmHeight, 0), Quaternion.identity);
         floorCreated.name = $"Floor{gm.floorNumber}";
-        floorRenderer.material = gm.materialsTab[randomMaterial];
+        if (gm.floorNumber > 50)
+        {
+            int randomMaterial = Random.Range(0, 3);
+            floorRenderer.material = gm.materialsTab[randomMaterial];
+        }
         gm.floorNumber++;
         gm.howManyFloorsCurentlly++;
         spawningPlatfoprmHeight += randomY;
