@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerMovment : MonoBehaviour
 {
     Rigidbody2D rb;
-    public float movementSpeed, jumpForce;
-    public bool isGround, canMoveLeft, canMoveRight, changeColor;
+    public float movementSpeed, jumpForce, movementSpeedOnAir;
+    public bool isGround, canMoveLeft, canMoveRight, changeColor, isPlayerSpeedUp;
     GameObject feet;
     public Vector3 playerPosition;
     GameManager gm;
     Renderer renderer;
+    public int time;
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -19,18 +20,17 @@ public class PlayerMovment : MonoBehaviour
         canMoveRight = true;
         playerPosition = this.gameObject.transform.position;
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        movementSpeed = 7f;
+        movementSpeed = 5f;
         jumpForce = 10f;
         renderer = this.gameObject.GetComponent<Renderer>();
         changeColor = false;
+        movementSpeedOnAir = movementSpeed;
+        isPlayerSpeedUp = false;
     }
 
-    
+
     void Update()
     {
-        if (isGround)
-            movementSpeed = 7f;
-
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -38,10 +38,43 @@ public class PlayerMovment : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.A) && canMoveLeft)
-            rb.velocity = new Vector2(-movementSpeed, rb.velocity.y);
+        {
+            if (isGround)
+            {
+                rb.velocity = new Vector2(-movementSpeed, rb.velocity.y);
+                SpeedUp();
+            }
+            else
+            {
+                movementSpeedOnAir = movementSpeed;
+                rb.velocity = new Vector2(-movementSpeedOnAir, rb.velocity.y);
+            }
+        }
 
         if (Input.GetKey(KeyCode.D) && canMoveRight)
-            rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
+        {
+            if (isGround)
+            {
+                rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
+                SpeedUp();
+            }
+            else
+            {
+                movementSpeedOnAir = movementSpeed;
+                rb.velocity = new Vector2(movementSpeedOnAir, rb.velocity.y);
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+            isPlayerSpeedUp = false;
+
+        if (!isPlayerSpeedUp)
+        {
+            if (movementSpeed > 5.1f && isGround)
+                movementSpeed -= 0.1f;
+        }
+
+
 
         /*feet.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.45f, this.transform.position.z);
         feet.transform.rotation = Quaternion.identity;
@@ -57,4 +90,12 @@ public class PlayerMovment : MonoBehaviour
         renderer.material = gm.materialsTab[randomMaterial];
         changeColor = false;
     }
+
+    void SpeedUp()
+    {
+        isPlayerSpeedUp = true;
+        if (movementSpeed < 10f)
+            movementSpeed += 0.1f;  
+    }
+
 }

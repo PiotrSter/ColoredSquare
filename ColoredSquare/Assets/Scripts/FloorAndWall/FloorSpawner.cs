@@ -8,7 +8,7 @@ public class FloorSpawner : MonoBehaviour
     public Transform player;
     public GameManager gm;
     public float spawningPlatfoprmHeight;
-    Renderer floorRenderer;
+    Renderer floorRenderer, playerRenderer;
     FloorBehavior floorBehavior;
     void Awake()
     {
@@ -17,6 +17,7 @@ public class FloorSpawner : MonoBehaviour
         floorRenderer = floor.GetComponent<Renderer>();
         floorRenderer.material = gm.materialsTab[0];
         floorBehavior = floor.GetComponent<FloorBehavior>();
+        playerRenderer = GameObject.Find("Player").GetComponent<Renderer>();
         spawningPlatfoprmHeight = -2f;
         SpawnFloor();
         SpawnFloor();
@@ -51,8 +52,13 @@ public class FloorSpawner : MonoBehaviour
         floorCreated.name = $"Floor{gm.floorNumber}";
         if (gm.floorNumber > 50)
         {
-            int randomMaterial = Random.Range(0, 3);
-            floorRenderer.material = gm.materialsTab[randomMaterial];
+            if (gm.floorNumber % 50 != 0)
+            {
+                int randomMaterial = Random.Range(0, 3);
+                floorRenderer.material = gm.materialsTab[randomMaterial];
+            }
+            else
+                floorRenderer.material = gm.materialsTab[0];
         }
         gm.floorNumber++;
         gm.howManyFloorsCurentlly++;

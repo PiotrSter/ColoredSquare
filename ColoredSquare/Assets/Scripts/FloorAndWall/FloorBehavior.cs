@@ -25,13 +25,13 @@ public class FloorBehavior : MonoBehaviour
             gm.howManyFloorsCurentlly--;
         }
 
-        if (collision.name == "Player")
+        /*if (collision.name == "Feet")
         {
             if (number % 50 == 0)
             {
                 player.changeColor = true;
                 gm.changeSpeed = true;
             }
-        }
+        }*/
     }
 }
