@@ -25,18 +25,19 @@ public class GroundFloorBehavior : MonoBehaviour
     {
         if (collision.name == "Feet")
         {
+            if (floor.number % 50 == 0 && !floor.isVisited)
+            {
+                player.changeColor = true;
+                floor.gm.changeSpeed = true;
+            }
+
             if (playerRenderer.material.name == floorRenderer.material.name || playerRenderer.material.name == "White (Instance)" || floorRenderer.material.name == "White (Instance)")
             {
                 boxCollider2D.isTrigger = false;
                 player.isGround = true;
                 leftWall.canBounce = true;
                 rightWall.canBounce = true;
-            }
-
-            if (floor.number % 50 == 0)
-            {
-                player.changeColor = true;
-                floor.gm.changeSpeed = true;
+                floor.isVisited = true;
             }
         }
     }

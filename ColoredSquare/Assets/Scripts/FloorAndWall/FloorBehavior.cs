@@ -8,6 +8,7 @@ public class FloorBehavior : MonoBehaviour
     public PlayerMovment player;
     public GameManager gm;
     public int number;
+    public bool isVisited;
 
     void Awake()
     {
@@ -15,6 +16,7 @@ public class FloorBehavior : MonoBehaviour
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         boxCollider2D = this.GetComponent<BoxCollider2D>();
         boxCollider2D.isTrigger = true;
+        isVisited = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,14 +26,5 @@ public class FloorBehavior : MonoBehaviour
             Destroy(this.gameObject);
             gm.howManyFloorsCurentlly--;
         }
-
-        /*if (collision.name == "Feet")
-        {
-            if (number % 50 == 0)
-            {
-                player.changeColor = true;
-                gm.changeSpeed = true;
-            }
-        }*/
     }
 }
