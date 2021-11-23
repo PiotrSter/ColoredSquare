@@ -4,31 +4,36 @@ using UnityEngine;
 
 public class FloorSpawner : MonoBehaviour
 {
-    public GameObject floor, floorCreated, pastFoor;
+    public GameObject floor, floorCreated;
     public Transform player;
     public GameManager gm;
-    public float spawningPlatfoprmHeight;
+    public float spawningPlatformHeight;
     public Renderer floorRenderer, playerRenderer, pastFloorRenderer;
     FloorBehavior floorBehavior;
+    public PlayerMovment playerMovment;
+    public int test;
+    //public int drawOtherColorToFloor; // zmienna pomaga okreœliæ czy platformy mog¹ zostaæ losowane w innym, kolorze, mog¹ dopiero gdy dla gracza zmienia siê kolor
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
+        playerMovment = GameObject.Find("Player").GetComponent<PlayerMovment>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         floorRenderer = floor.GetComponent<Renderer>();
         floorRenderer.material = gm.materialsTab[0];
         floorBehavior = floor.GetComponent<FloorBehavior>();
         playerRenderer = GameObject.Find("Player").GetComponent<Renderer>();
-        pastFoor = floor;
-        pastFloorRenderer = pastFoor.GetComponent<Renderer>();
-        spawningPlatfoprmHeight = -2f;
-        SpawnFloor();
-        SpawnFloor();
-        SpawnFloor();
+        spawningPlatformHeight = -2f;
+        //drawOtherColorToFloor = 0;
+        for (int i = 0; i < 20; i++)
+        {
+            SpawnFloor(); // zwiekszysc predkosc spawnowania
+        }
     }
 
     void Update()
     {
-        if (gm.howManyFloorsCurentlly < 20)
+        test = gm.listOfFloors.Count;
+        if (gm.listOfFloors.Count < 50)
             SpawnFloor();
     }
 
@@ -36,7 +41,7 @@ public class FloorSpawner : MonoBehaviour
     {
         float randomX, randomY, sizeX;
 
-        if (gm.floorNumber % 50 != 0)
+        if (gm.floorNumber % 20 != 0)
         {
             randomX = Random.Range(-8f, 8f);
             sizeX = Random.Range(3f, 8.5f);
@@ -52,31 +57,39 @@ public class FloorSpawner : MonoBehaviour
         floorBehavior.number = gm.floorNumber;
         if (gm.floorNumber > 50)
         {
-            pastFloorRenderer.sharedMaterial = floorRenderer.sharedMaterial;
             if (gm.floorNumber % 50 != 0) // wlosowaniu koloru dodaæ ¿eby losowanie odpowiedniego koloru nastêpowa³o dopiero po tym gdy dla kostki zmieni siekolor
             {
                 int randomMaterial = Random.Range(0, 3);
-                floorRenderer.material = gm.materialsTab[randomMaterial];
                 if (playerRenderer.material.name != "White (Instance)")
                 {
-                    if (floorRenderer.material != playerRenderer.material && floorRenderer.material == pastFloorRenderer.material)
+                    if (gm.floorNumber % 2 == 0)
                     {
-                        int randomMaterialSecondDraw = Random.Range(0, 2);
-                        if (randomMaterialSecondDraw == 0)
+                        floorRenderer.material = gm.materialsTab[0];
+                        /*if (randomMaterial == 0)
                             floorRenderer.material = gm.materialsTab[0];
                         else
-                            floorRenderer.material = playerRenderer.material;
+                        {
+                            if (playerRenderer.material.name != "Red (Instance)")
+                                floorRenderer.material = gm.materialsTab[1];
+                            else if (playerRenderer.material.name != "Blue (Instance)")
+                                floorRenderer.material = gm.materialsTab[2];
+                        }*/
                     }
+                    else
+                        floorRenderer.material = gm.materialsTab[randomMaterial];
                 }
+                else
+                    floorRenderer.material = gm.materialsTab[randomMaterial];
 
             }
             else
                 floorRenderer.material = gm.materialsTab[0];
         }
-        floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatfoprmHeight, 0), Quaternion.identity);
+        floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatformHeight, 0), Quaternion.identity);
         floorCreated.name = $"Floor{gm.floorNumber}";
+        gm.listOfFloors.Add(floorCreated);
         gm.floorNumber++;
-        gm.howManyFloorsCurentlly++;
-        spawningPlatfoprmHeight += randomY;
+        gm.canSpawn = false;
+        spawningPlatformHeight += randomY;
     }
 }

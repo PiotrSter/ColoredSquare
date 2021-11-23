@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public bool isGameStart, isGameOver, changeSpeed;
-    public int howManyFloorsCurentlly, floorNumber;
+    public bool isGameStart, isGameOver, changeSpeed, canSpawn;
+    public int floorNumber, points;
     public Material[] materialsTab = new Material[3];
+    public List<GameObject> listOfFloors = new List<GameObject>();
 
-    private void Awake()
+    void Awake()
     {
-        howManyFloorsCurentlly = 0;
         floorNumber = 1;
         changeSpeed = false;
+        points = 0;
+        canSpawn = false;
     }
     void Start()
     {

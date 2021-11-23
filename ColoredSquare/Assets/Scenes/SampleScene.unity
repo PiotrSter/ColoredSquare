@@ -279,6 +279,7 @@ MonoBehaviour:
   isPlayerSpeedUp: 0
   playerPosition: {x: 0, y: 0, z: 0}
   time: 0
+  howManyChangeColor: 0
 --- !u!1 &424282495
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +331,7 @@ MonoBehaviour:
   leftWall: {fileID: 0}
   rightWall: {fileID: 0}
   floor: {fileID: 0}
+  gm: {fileID: 0}
 --- !u!61 &424282498
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -501,12 +503,14 @@ MonoBehaviour:
   isGameStart: 0
   isGameOver: 0
   changeSpeed: 0
-  howManyFloorsCurentlly: 0
+  canSpawn: 0
   floorNumber: 0
+  points: 0
   materialsTab:
   - {fileID: 2100000, guid: d5dae1e7a77b6cb45a449bc5df6bf7fb, type: 2}
   - {fileID: 2100000, guid: 5577b30bff407cf409efbd1771859732, type: 2}
   - {fileID: 2100000, guid: 05a57033655e57d4ab84fddb5a67fb26, type: 2}
+  listOfFloors: []
 --- !u!114 &598706594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,13 +525,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floor: {fileID: 4448757274328439023, guid: 904f772d44cb4b841beaa8c3bef200ea, type: 3}
   floorCreated: {fileID: 0}
-  pastFoor: {fileID: 0}
   player: {fileID: 0}
   gm: {fileID: 0}
-  spawningPlatfoprmHeight: 0
+  spawningPlatformHeight: 0
   floorRenderer: {fileID: 0}
   playerRenderer: {fileID: 0}
   pastFloorRenderer: {fileID: 0}
+  playerMovment: {fileID: 0}
+  test: 0
 --- !u!1 &990805270
 GameObject:
   m_ObjectHideFlags: 0

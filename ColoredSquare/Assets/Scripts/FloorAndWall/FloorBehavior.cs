@@ -24,7 +24,7 @@ public class FloorBehavior : MonoBehaviour
         if (collision.name == "GameOverTrigger")
         {
             Destroy(this.gameObject);
-            gm.howManyFloorsCurentlly--;
+            gm.listOfFloors.Remove(this.gameObject);
         }
     }
 }

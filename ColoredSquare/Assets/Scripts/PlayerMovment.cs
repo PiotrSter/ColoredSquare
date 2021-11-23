@@ -11,7 +11,7 @@ public class PlayerMovment : MonoBehaviour
     public Vector3 playerPosition;
     GameManager gm;
     Renderer renderer;
-    public int time;
+    public int time, howManyChangeColor;
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -26,6 +26,7 @@ public class PlayerMovment : MonoBehaviour
         changeColor = false;
         movementSpeedOnAir = movementSpeed;
         isPlayerSpeedUp = false;
+        howManyChangeColor = 0;
     }
 
 
@@ -89,6 +90,7 @@ public class PlayerMovment : MonoBehaviour
         int randomMaterial = Random.Range(0, 3);
         renderer.material = gm.materialsTab[randomMaterial];
         changeColor = false;
+        howManyChangeColor++;
     }
 
     void SpeedUp()
