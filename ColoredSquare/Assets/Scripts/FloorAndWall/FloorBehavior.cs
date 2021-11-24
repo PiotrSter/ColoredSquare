@@ -7,7 +7,8 @@ public class FloorBehavior : MonoBehaviour
     public BoxCollider2D boxCollider2D;
     public PlayerMovment player;
     public GameManager gm;
-    public int number;
+    public FloorSpawner floorSpawner;
+    public int number, numberOfTrigger;
     public bool isVisited;
 
     void Awake()
@@ -17,6 +18,7 @@ public class FloorBehavior : MonoBehaviour
         boxCollider2D = this.GetComponent<BoxCollider2D>();
         boxCollider2D.isTrigger = true;
         isVisited = false;
+        floorSpawner = GameObject.Find("GameManager").GetComponent<FloorSpawner>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,7 +26,17 @@ public class FloorBehavior : MonoBehaviour
         if (collision.name == "GameOverTrigger")
         {
             Destroy(this.gameObject);
-            gm.listOfFloors.Remove(this.gameObject);
+            //gm.listOfFloors.Remove(this.gameObject);
+        }
+
+        if (collision.name == "Player")
+        {
+            if ((number + 10) % 50 == 0 && !isVisited)
+            {
+                player.drawColor = true;
+                floorSpawner.canSpawn = true;
+                gm.wallGrows = true;
+            }
         }
     }
 }

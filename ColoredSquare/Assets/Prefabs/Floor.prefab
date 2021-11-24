@@ -78,6 +78,7 @@ MonoBehaviour:
   rightWall: {fileID: 0}
   floor: {fileID: 0}
   gm: {fileID: 0}
+  floorSpawner: {fileID: 0}
 --- !u!1 &4448757274328439023
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +92,7 @@ GameObject:
   - component: {fileID: 4448757274328439016}
   - component: {fileID: 4448757274328439019}
   - component: {fileID: 6225095734625751722}
+  - component: {fileID: 6495437435383151952}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Floor
@@ -107,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 4448757274328439023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.21, y: -1.49, z: 0}
-  m_LocalScale: {x: 5.7957335, y: 0.7, z: 1}
+  m_LocalScale: {x: 19, y: 0.7, z: 1}
   m_Children:
   - {fileID: 4448757275582479107}
   - {fileID: 4448757274604538684}
@@ -135,7 +137,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5577b30bff407cf409efbd1771859732, type: 2}
+  - {fileID: 2100000, guid: d5dae1e7a77b6cb45a449bc5df6bf7fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,7 +210,7 @@ MonoBehaviour:
   boxCollider2D: {fileID: 0}
   player: {fileID: 0}
   gm: {fileID: 0}
-  number: 91
+  number: 100
   isVisited: 0
 --- !u!50 &6225095734625751722
 Rigidbody2D:
@@ -231,6 +233,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 2
+--- !u!61 &6495437435383151952
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4448757274328439023}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 19, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &4448757274604538675
 GameObject:
   m_ObjectHideFlags: 0

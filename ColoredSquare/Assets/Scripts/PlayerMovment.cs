@@ -6,12 +6,12 @@ public class PlayerMovment : MonoBehaviour
 {
     Rigidbody2D rb;
     public float movementSpeed, jumpForce, movementSpeedOnAir;
-    public bool isGround, canMoveLeft, canMoveRight, changeColor, isPlayerSpeedUp;
+    public bool isGround, canMoveLeft, canMoveRight, changeColor, isPlayerSpeedUp, drawColor;
     GameObject feet;
     public Vector3 playerPosition;
     GameManager gm;
-    Renderer renderer;
-    public int time, howManyChangeColor;
+    public Renderer renderer;
+    public int time, randomMaterial;
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -24,9 +24,9 @@ public class PlayerMovment : MonoBehaviour
         jumpForce = 10f;
         renderer = this.gameObject.GetComponent<Renderer>();
         changeColor = false;
+        drawColor = false;
         movementSpeedOnAir = movementSpeed;
         isPlayerSpeedUp = false;
-        howManyChangeColor = 0;
     }
 
 
@@ -81,16 +81,23 @@ public class PlayerMovment : MonoBehaviour
         feet.transform.rotation = Quaternion.identity;
         w razie gdybym jednak chcia³ ¿eby kwadrat móg³ siekrêciæ wzgledem osi z*/
 
-        if (changeColor)
+        if (drawColor)
             DrawMaterial();
+
+        if (changeColor)
+            ChangeColor();
     }
 
     void DrawMaterial()
     {
-        int randomMaterial = Random.Range(0, 3);
+        randomMaterial = Random.Range(0, 3);
+        drawColor = false;
+    }
+
+    void ChangeColor()
+    {
         renderer.material = gm.materialsTab[randomMaterial];
         changeColor = false;
-        howManyChangeColor++;
     }
 
     void SpeedUp()

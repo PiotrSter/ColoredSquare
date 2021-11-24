@@ -12,7 +12,7 @@ public class FloorSpawner : MonoBehaviour
     FloorBehavior floorBehavior;
     public PlayerMovment playerMovment;
     public int test;
-    //public int drawOtherColorToFloor; // zmienna pomaga okreœliæ czy platformy mog¹ zostaæ losowane w innym, kolorze, mog¹ dopiero gdy dla gracza zmienia siê kolor
+    public bool canSpawn;
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
@@ -23,25 +23,27 @@ public class FloorSpawner : MonoBehaviour
         floorBehavior = floor.GetComponent<FloorBehavior>();
         playerRenderer = GameObject.Find("Player").GetComponent<Renderer>();
         spawningPlatformHeight = -2f;
-        //drawOtherColorToFloor = 0;
-        for (int i = 0; i < 20; i++)
-        {
-            SpawnFloor(); // zwiekszysc predkosc spawnowania
-        }
+        canSpawn = false;
+        for (int i = 0; i < 50; i++)
+            SpawnFloor();
     }
 
     void Update()
     {
-        test = gm.listOfFloors.Count;
-        if (gm.listOfFloors.Count < 50)
-            SpawnFloor();
+        if (canSpawn)
+        {
+            for (int i = 0; i < 50; i++)
+                SpawnFloor();
+
+            canSpawn = false;
+        }
     }
 
     void SpawnFloor()
     {
         float randomX, randomY, sizeX;
 
-        if (gm.floorNumber % 20 != 0)
+        if (gm.floorNumber % 50 != 0)
         {
             randomX = Random.Range(-8f, 8f);
             sizeX = Random.Range(3f, 8.5f);
@@ -57,23 +59,22 @@ public class FloorSpawner : MonoBehaviour
         floorBehavior.number = gm.floorNumber;
         if (gm.floorNumber > 50)
         {
-            if (gm.floorNumber % 50 != 0) // wlosowaniu koloru dodaæ ¿eby losowanie odpowiedniego koloru nastêpowa³o dopiero po tym gdy dla kostki zmieni siekolor
+            if (gm.floorNumber % 50 != 0) 
             {
                 int randomMaterial = Random.Range(0, 3);
-                if (playerRenderer.material.name != "White (Instance)")
+                if (playerMovment.randomMaterial != 0)
                 {
                     if (gm.floorNumber % 2 == 0)
                     {
-                        floorRenderer.material = gm.materialsTab[0];
-                        /*if (randomMaterial == 0)
+                        if (randomMaterial == 0)
                             floorRenderer.material = gm.materialsTab[0];
                         else
                         {
-                            if (playerRenderer.material.name != "Red (Instance)")
+                            if (playerMovment.randomMaterial == 1)
                                 floorRenderer.material = gm.materialsTab[1];
-                            else if (playerRenderer.material.name != "Blue (Instance)")
+                            else if (playerMovment.randomMaterial == 2)
                                 floorRenderer.material = gm.materialsTab[2];
-                        }*/
+                        }
                     }
                     else
                         floorRenderer.material = gm.materialsTab[randomMaterial];
@@ -87,9 +88,8 @@ public class FloorSpawner : MonoBehaviour
         }
         floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatformHeight, 0), Quaternion.identity);
         floorCreated.name = $"Floor{gm.floorNumber}";
-        gm.listOfFloors.Add(floorCreated);
+        //gm.listOfFloors.Add(floorCreated);
         gm.floorNumber++;
-        gm.canSpawn = false;
         spawningPlatformHeight += randomY;
     }
 }

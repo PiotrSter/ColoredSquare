@@ -6,11 +6,10 @@ public class WallBehavior : MonoBehaviour
 {
     Rigidbody2D rb;
     public PlayerMovment player;
-    public bool isTimerOn, canBounce;
+    public bool canBounce;
     public string gameObjectName;
     public float reflectionPowerHorizontal, reflectionPowerVertical;
-    public int time;
-    public Transform wallTransform;
+    public Transform wallTransform, leftWall, rightWall;
     public GameManager gm;
     void Awake()
     {
@@ -18,29 +17,22 @@ public class WallBehavior : MonoBehaviour
         gameObjectName = this.gameObject.name;
         player = GameObject.Find("Player").GetComponent<PlayerMovment>();
         wallTransform = this.gameObject.transform;
+        leftWall = GameObject.Find("LeftWall").GetComponent<Transform>();
+        rightWall = GameObject.Find("RightWall").GetComponent<Transform>();
         reflectionPowerHorizontal = 8f;
         reflectionPowerVertical = 8f;
-        time = 180;
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         canBounce = true;
     }
 
     void Update()
     {
-        /*if (isTimerOn)
+        if (gm.wallGrows)
         {
-            if (time == 0)
-            {
-                player.canMove = true;
-                isTimerOn = false;
-                time = 180;
-            }
-            else if (time > 0)
-                time--;       
-        }*/
-
-        if (gm.floorNumber % 31 == 0)
-            wallTransform.localScale = new Vector3(wallTransform.localScale.x, wallTransform.localScale.y + 50, wallTransform.localScale.z);
+            wallTransform.localScale = new Vector3(wallTransform.localScale.x, wallTransform.localScale.y + 300, wallTransform.localScale.z);
+            if (leftWall.localScale.y == rightWall.localScale.y)
+                gm.wallGrows = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -49,7 +41,6 @@ public class WallBehavior : MonoBehaviour
         {
             //player.canMove = false;
             //player.movementSpeed = 4.5f;
-            isTimerOn = true;
             if (gameObjectName == "LeftWall")
             {
                 player.canMoveLeft = false;
