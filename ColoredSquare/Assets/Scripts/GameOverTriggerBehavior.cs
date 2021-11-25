@@ -23,6 +23,9 @@ public class GameOverTriggerBehavior : MonoBehaviour
             speed += 0.5f;
             gm.changeSpeed = false;
         }
+
+        if (gm.isGameOver)
+            speed = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

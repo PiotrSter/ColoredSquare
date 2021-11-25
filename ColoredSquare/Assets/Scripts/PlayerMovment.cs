@@ -6,16 +6,16 @@ public class PlayerMovment : MonoBehaviour
 {
     Rigidbody2D rb;
     public float movementSpeed, jumpForce, movementSpeedOnAir;
-    public bool isGround, canMoveLeft, canMoveRight, changeColor, isPlayerSpeedUp, drawColor;
-    GameObject feet;
+    public bool isGround, canMoveLeft, canMoveRight, changeColor, isPlayerSpeedUp;
+    //GameObject feet;
     public Vector3 playerPosition;
     GameManager gm;
     public Renderer renderer;
-    public int time, randomMaterial;
+    public int time, randomMaterialNumber;
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        feet = GameObject.Find("Feet");
+        //feet = GameObject.Find("Feet");
         canMoveLeft = true;
         canMoveRight = true;
         playerPosition = this.gameObject.transform.position;
@@ -24,14 +24,15 @@ public class PlayerMovment : MonoBehaviour
         jumpForce = 10f;
         renderer = this.gameObject.GetComponent<Renderer>();
         changeColor = false;
-        drawColor = false;
         movementSpeedOnAir = movementSpeed;
         isPlayerSpeedUp = false;
     }
 
-
     void Update()
     {
+        if (gm.isGameOver)
+            this.gameObject.SetActive(false);
+
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -81,22 +82,18 @@ public class PlayerMovment : MonoBehaviour
         feet.transform.rotation = Quaternion.identity;
         w razie gdybym jednak chcia³ ¿eby kwadrat móg³ siekrêciæ wzgledem osi z*/
 
-        if (drawColor)
-            DrawMaterial();
-
         if (changeColor)
             ChangeColor();
     }
 
-    void DrawMaterial()
+    public void DrawMaterial()
     {
-        randomMaterial = Random.Range(0, 3);
-        drawColor = false;
+        randomMaterialNumber = Random.Range(0, 3);
     }
 
     void ChangeColor()
     {
-        renderer.material = gm.materialsTab[randomMaterial];
+        renderer.material = gm.materialsTab[randomMaterialNumber];
         changeColor = false;
     }
 

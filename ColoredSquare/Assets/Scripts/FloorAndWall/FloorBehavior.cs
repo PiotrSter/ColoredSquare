@@ -24,19 +24,7 @@ public class FloorBehavior : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.name == "GameOverTrigger")
-        {
             Destroy(this.gameObject);
-            //gm.listOfFloors.Remove(this.gameObject);
-        }
 
-        if (collision.name == "Player")
-        {
-            if ((number + 10) % 50 == 0 && !isVisited)
-            {
-                player.drawColor = true;
-                floorSpawner.canSpawn = true;
-                gm.wallGrows = true;
-            }
-        }
     }
 }

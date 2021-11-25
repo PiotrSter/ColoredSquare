@@ -27,12 +27,7 @@ public class WallBehavior : MonoBehaviour
 
     void Update()
     {
-        if (gm.wallGrows)
-        {
-            wallTransform.localScale = new Vector3(wallTransform.localScale.x, wallTransform.localScale.y + 300, wallTransform.localScale.z);
-            if (leftWall.localScale.y == rightWall.localScale.y)
-                gm.wallGrows = false;
-        }
+        this.transform.position = new Vector2(this.transform.position.x, this.player.transform.position.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

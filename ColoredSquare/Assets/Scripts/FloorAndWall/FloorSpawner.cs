@@ -11,8 +11,10 @@ public class FloorSpawner : MonoBehaviour
     public Renderer floorRenderer, playerRenderer, pastFloorRenderer;
     FloorBehavior floorBehavior;
     public PlayerMovment playerMovment;
-    public int test;
     public bool canSpawn;
+
+    public Transform Floors;
+    public GameObject Spawner;
     void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
@@ -24,22 +26,16 @@ public class FloorSpawner : MonoBehaviour
         playerRenderer = GameObject.Find("Player").GetComponent<Renderer>();
         spawningPlatformHeight = -2f;
         canSpawn = false;
+        Spawn();
+    }
+
+    public void Spawn()
+    {
         for (int i = 0; i < 50; i++)
             SpawnFloor();
     }
 
-    void Update()
-    {
-        if (canSpawn)
-        {
-            for (int i = 0; i < 50; i++)
-                SpawnFloor();
-
-            canSpawn = false;
-        }
-    }
-
-    void SpawnFloor()
+    private void SpawnFloor()
     {
         float randomX, randomY, sizeX;
 
@@ -57,12 +53,13 @@ public class FloorSpawner : MonoBehaviour
         randomY = Random.Range(2f, 4f);        
         floor.transform.localScale = new Vector3(sizeX, floor.transform.localScale.y, floor.transform.localScale.z);
         floorBehavior.number = gm.floorNumber;
+
         if (gm.floorNumber > 50)
         {
             if (gm.floorNumber % 50 != 0) 
             {
                 int randomMaterial = Random.Range(0, 3);
-                if (playerMovment.randomMaterial != 0)
+                if (playerMovment.randomMaterialNumber != 0)
                 {
                     if (gm.floorNumber % 2 == 0)
                     {
@@ -70,14 +67,16 @@ public class FloorSpawner : MonoBehaviour
                             floorRenderer.material = gm.materialsTab[0];
                         else
                         {
-                            if (playerMovment.randomMaterial == 1)
+                            if (playerMovment.randomMaterialNumber == 1)
                                 floorRenderer.material = gm.materialsTab[1];
-                            else if (playerMovment.randomMaterial == 2)
+                            else if (playerMovment.randomMaterialNumber == 2)
                                 floorRenderer.material = gm.materialsTab[2];
+                                Debug.Log($"Niebieski");
                         }
                     }
                     else
                         floorRenderer.material = gm.materialsTab[randomMaterial];
+                        Debug.Log("Losowy");
                 }
                 else
                     floorRenderer.material = gm.materialsTab[randomMaterial];
@@ -86,9 +85,12 @@ public class FloorSpawner : MonoBehaviour
             else
                 floorRenderer.material = gm.materialsTab[0];
         }
-        floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatformHeight, 0), Quaternion.identity);
+
+        if((gm.floorNumber + 10) % 50 == 0)
+            Instantiate(Spawner, new Vector3(randomX, spawningPlatformHeight, 0), Quaternion.identity, Floors);
+
+        floorCreated = Instantiate(floor, new Vector3(randomX, spawningPlatformHeight, 0), Quaternion.identity, Floors);
         floorCreated.name = $"Floor{gm.floorNumber}";
-        //gm.listOfFloors.Add(floorCreated);
         gm.floorNumber++;
         spawningPlatformHeight += randomY;
     }
