@@ -79,8 +79,8 @@ public class PlayerMovment : MonoBehaviour
 
 
         /*feet.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.45f, this.transform.position.z);
-        feet.transform.rotation = Quaternion.identity;
-        w razie gdybym jednak chcia³ ¿eby kwadrat móg³ siekrêciæ wzgledem osi z*/
+        feet.transform.rotation = Quaternion.identity;*/
+        //w razie gdybym jednak chcia³ ¿eby kwadrat móg³ siekrêciæ wzgledem osi z
 
         if (changeColor)
             ChangeColor();

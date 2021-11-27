@@ -6,7 +6,6 @@ public class SideSafeguard : MonoBehaviour
 {
     public PlayerMovment player;
     public string gameObjectName;
-
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovment>();
@@ -18,9 +17,15 @@ public class SideSafeguard : MonoBehaviour
         if (collision.name == "Feet")
         {
             if (gameObjectName == "LeftSideSafeguard")
-                player.canMoveRight = false;
+            {
+                if (Input.GetKey(KeyCode.D)) 
+                    player.canMoveRight = false;
+            }
             else if (gameObjectName == "RightSideSafeguard")
-                player.canMoveLeft = false;
+            {
+                if(Input.GetKey(KeyCode.A))
+                    player.canMoveLeft = false;
+            }
         }
     }
 

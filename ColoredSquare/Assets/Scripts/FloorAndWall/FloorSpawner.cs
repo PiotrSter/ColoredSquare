@@ -71,12 +71,10 @@ public class FloorSpawner : MonoBehaviour
                                 floorRenderer.material = gm.materialsTab[1];
                             else if (playerMovment.randomMaterialNumber == 2)
                                 floorRenderer.material = gm.materialsTab[2];
-                                Debug.Log($"Niebieski");
                         }
                     }
                     else
                         floorRenderer.material = gm.materialsTab[randomMaterial];
-                        Debug.Log("Losowy");
                 }
                 else
                     floorRenderer.material = gm.materialsTab[randomMaterial];

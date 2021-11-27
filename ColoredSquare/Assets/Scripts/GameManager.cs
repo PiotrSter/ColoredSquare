@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int floorNumber, points;
     public Material[] materialsTab = new Material[3];
     public GameObject endGamePanel;
+    public Text scoreText;
 
     void Awake()
     {
@@ -22,5 +24,7 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver)
             endGamePanel.SetActive(true);
+
+        scoreText.text = $"Score: {points}";
     }
 }
