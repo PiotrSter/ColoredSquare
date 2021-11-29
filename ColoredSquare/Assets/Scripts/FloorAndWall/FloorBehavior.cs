@@ -9,7 +9,9 @@ public class FloorBehavior : MonoBehaviour
     public GameManager gm;
     public FloorSpawner floorSpawner;
     public int number, numberOfTrigger;
-    public bool isVisited;
+    public bool isVisited, go, canMove;
+    public float speed;
+    Rigidbody2D rb;
 
     void Awake()
     {
@@ -19,12 +21,35 @@ public class FloorBehavior : MonoBehaviour
         boxCollider2D.isTrigger = true;
         isVisited = false;
         floorSpawner = GameObject.Find("GameManager").GetComponent<FloorSpawner>();
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
+        speed = 2f;
+        canMove = false;
+    }
+
+    void Update()
+    {
+        if (number > 100 && number % 50 != 0 && canMove)
+        {
+            if (go)
+                rb.velocity = new Vector2(-speed, rb.velocity.y);
+            else
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.name == "GameOverTrigger")
             Destroy(this.gameObject);
+
+        if (collision.name == "PlatformDetector")
+            canMove = true;
+
+        if (collision.name == "LeftWall")
+            go = false;
+
+        if (collision.name == "RightWall")
+            go = true;
 
     }
 }
