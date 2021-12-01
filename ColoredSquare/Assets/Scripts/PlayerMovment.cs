@@ -7,7 +7,6 @@ public class PlayerMovment : MonoBehaviour
     Rigidbody2D rb;
     public float movementSpeed, jumpForce, movementSpeedOnAir;
     public bool isGround, canMoveLeft, canMoveRight, changeColor, isPlayerSpeedUp;
-    //GameObject feet;
     public Vector3 playerPosition;
     GameManager gm;
     public Renderer renderer;
@@ -15,7 +14,6 @@ public class PlayerMovment : MonoBehaviour
     void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        //feet = GameObject.Find("Feet");
         canMoveLeft = true;
         canMoveRight = true;
         playerPosition = this.gameObject.transform.position;
@@ -76,19 +74,13 @@ public class PlayerMovment : MonoBehaviour
                 movementSpeed -= 0.1f;
         }
 
-
-
-        /*feet.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.45f, this.transform.position.z);
-        feet.transform.rotation = Quaternion.identity;*/
-        //w razie gdybym jednak chcia³ ¿eby kwadrat móg³ siekrêciæ wzgledem osi z
-
         if (changeColor)
             ChangeColor();
     }
 
     public void DrawMaterial()
     {
-        randomMaterialNumber = Random.Range(0, 3);
+        randomMaterialNumber = Random.Range(1, 3);
     }
 
     void ChangeColor()

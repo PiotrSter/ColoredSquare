@@ -186,6 +186,11 @@ MonoBehaviour:
   number: 50
   numberOfTrigger: 0
   isVisited: 0
+  go: 0
+  canMove: 0
+  speed: 0
+  leftWallTransform: {fileID: 0}
+  rightWallTransform: {fileID: 0}
 --- !u!50 &6225095734625751722
 Rigidbody2D:
   serializedVersion: 4

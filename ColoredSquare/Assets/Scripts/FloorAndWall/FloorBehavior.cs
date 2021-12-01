@@ -11,6 +11,7 @@ public class FloorBehavior : MonoBehaviour
     public int number, numberOfTrigger;
     public bool isVisited, go, canMove;
     public float speed;
+    public Transform leftWallTransform, rightWallTransform;
     Rigidbody2D rb;
 
     void Awake()
@@ -24,6 +25,8 @@ public class FloorBehavior : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         speed = 2f;
         canMove = false;
+        leftWallTransform = GameObject.Find("LeftWall").GetComponent<Transform>();
+        rightWallTransform = GameObject.Find("RightWall").GetComponent<Transform>();
     }
 
     void Update()
@@ -45,11 +48,17 @@ public class FloorBehavior : MonoBehaviour
         if (collision.name == "PlatformDetector")
             canMove = true;
 
-        if (collision.name == "LeftWall")
+        if (collision.name == "LeftWall" || this.transform.position.x <= leftWallTransform.position.x )
             go = false;
 
-        if (collision.name == "RightWall")
+        if (collision.name == "RightWall" || this.transform.position.x >= rightWallTransform.position.x)
             go = true;
 
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.name == "PlatformDetector")
+            canMove = false;
     }
 }

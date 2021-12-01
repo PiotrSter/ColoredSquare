@@ -8,7 +8,7 @@ public class FloorSpawner : MonoBehaviour
     public Transform player;
     public GameManager gm;
     public float spawningPlatformHeight;
-    public Renderer floorRenderer, playerRenderer, pastFloorRenderer;
+    public Renderer floorRenderer, playerRenderer;
     FloorBehavior floorBehavior;
     public PlayerMovment playerMovment;
     public bool canSpawn;
@@ -57,27 +57,37 @@ public class FloorSpawner : MonoBehaviour
         if (gm.floorNumber > 50)
         {
             if (gm.floorNumber % 50 != 0) 
-            {
-                int randomMaterial = Random.Range(0, 3);
-                if (playerMovment.randomMaterialNumber != 0)
+            {              
+                if (gm.floorNumber < 151)
                 {
-                    if (gm.floorNumber % 2 == 0)
+                    int randomMaterial = Random.Range(0, 3);
+                    if (playerMovment.randomMaterialNumber != 0)
                     {
-                        if (randomMaterial == 0)
-                            floorRenderer.material = gm.materialsTab[0];
-                        else
+                        if (gm.floorNumber % 2 == 0)
                         {
-                            if (playerMovment.randomMaterialNumber == 1)
-                                floorRenderer.material = gm.materialsTab[1];
-                            else if (playerMovment.randomMaterialNumber == 2)
-                                floorRenderer.material = gm.materialsTab[2];
+                            if (randomMaterial == 0)
+                                floorRenderer.material = gm.materialsTab[0];
+                            else
+                            {
+                                if (playerMovment.randomMaterialNumber == 1)
+                                    floorRenderer.material = gm.materialsTab[1];
+                                else if (playerMovment.randomMaterialNumber == 2)
+                                    floorRenderer.material = gm.materialsTab[2];
+                            }
                         }
+                        else
+                            floorRenderer.material = gm.materialsTab[randomMaterial];
                     }
                     else
                         floorRenderer.material = gm.materialsTab[randomMaterial];
                 }
                 else
-                    floorRenderer.material = gm.materialsTab[randomMaterial];
+                {
+                    if (gm.floorNumber % 2 == 0)
+                        floorRenderer.material = gm.materialsTab[1];
+                    else
+                        floorRenderer.material = gm.materialsTab[2];
+                }
 
             }
             else
