@@ -31,7 +31,7 @@ public class FloorBehavior : MonoBehaviour
 
     void Update()
     {
-        if (number > 100 && number % 50 != 0 && canMove)
+        if (number > 100 && number % 50 != 0)
         {
             if (go)
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -45,20 +45,10 @@ public class FloorBehavior : MonoBehaviour
         if (collision.name == "GameOverTrigger")
             Destroy(this.gameObject);
 
-        if (collision.name == "PlatformDetector")
-            canMove = true;
-
-        if (collision.name == "LeftWall" || this.transform.position.x <= leftWallTransform.position.x )
+        if (collision.name == "LeftWall")
             go = false;
 
-        if (collision.name == "RightWall" || this.transform.position.x >= rightWallTransform.position.x)
+        if (collision.name == "RightWall")
             go = true;
-
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.name == "PlatformDetector")
-            canMove = false;
     }
 }

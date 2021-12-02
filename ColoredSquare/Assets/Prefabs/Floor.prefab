@@ -183,7 +183,7 @@ MonoBehaviour:
   player: {fileID: 0}
   gm: {fileID: 0}
   floorSpawner: {fileID: 0}
-  number: 50
+  number: 200
   numberOfTrigger: 0
   isVisited: 0
   go: 0
